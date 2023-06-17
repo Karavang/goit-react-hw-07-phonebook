@@ -14,7 +14,7 @@ export default function Form() {
   const handleFormSubmit = e => {
     e.preventDefault();
 
-    const findContact = contacts.find(contact =>
+    const findContact = contacts.items.find(contact =>
       contact.name.toLowerCase().includes(name.toLowerCase())
     );
 

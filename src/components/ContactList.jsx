@@ -8,7 +8,7 @@ export default function List() {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-  const filteredContacts = contacts.filter(contact =>
+  const filteredContacts = contacts.items.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
 
