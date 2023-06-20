@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getFilter, removeContact } from 'redux/contactsSlice';
+import {
+  getContacts,
+  getFilter,
+  removeContact,
+  fetchContacts,
+} from 'redux/contactsSlice';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 export default function List() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-  console.log(contacts);
-  const filteredContacts = contacts?.items.filter(contact =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [contacts]);
+  const filteredContacts = contacts
+    ? contacts.items.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+      )
+    : [];
 
   const handleDeleteContact = id => {
     dispatch(removeContact(id));

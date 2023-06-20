@@ -13,8 +13,8 @@ export default function Form() {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-
-    const findContact = contacts.items.find(contact =>
+    console.log(contacts);
+    const findContact = contacts.items?.find(contact =>
       contact.name.toLowerCase().includes(name.toLowerCase())
     );
 
@@ -26,6 +26,7 @@ export default function Form() {
     const contact = { id: nanoid(), name, number };
     dispatch(addContact(contact));
 
+    console.log(contacts);
     setName('');
     setNumber('');
   };
