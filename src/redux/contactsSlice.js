@@ -14,15 +14,15 @@ export const contactSlice = createSlice({
   initialState,
   reducers: {
     fetchContacts: (state, { payload }) => {
+      console.log(state);
       const fetchData = async () => {
         try {
-          const response = await axios.get(
+          payload = await axios.get(
             'https://6474b8d87de100807b1ba095.mockapi.io/contacts'
           );
-          console.log(response.data);
-          state.contacts.items = [...state.contacts.items, ...response.data];
-          console.log(state.contacts.items);
-          console.log(initialState);
+          console.log(payload.data);
+
+          state.contacts.items = payload.data;
         } catch (error) {
           console.error('Ошибка при получении данных:', error);
         }

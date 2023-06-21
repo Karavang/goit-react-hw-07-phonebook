@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, getContacts } from 'redux/contactsSlice';
+import { addContact, getContacts, fetchContacts } from 'redux/contactsSlice';
 
 export default function Form() {
   const [name, setName] = useState('');
@@ -13,8 +13,8 @@ export default function Form() {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-    console.log(contacts);
-    const findContact = contacts.items?.find(contact =>
+
+    const findContact = contacts.items.find(contact =>
       contact.name.toLowerCase().includes(name.toLowerCase())
     );
 
@@ -25,8 +25,8 @@ export default function Form() {
 
     const contact = { id: nanoid(), name, number };
     dispatch(addContact(contact));
+    dispatch(fetchContacts());
 
-    console.log(contacts);
     setName('');
     setNumber('');
   };
