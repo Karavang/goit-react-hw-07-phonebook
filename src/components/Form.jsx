@@ -14,10 +14,12 @@ export default function Form() {
   const handleFormSubmit = e => {
     e.preventDefault();
 
-    const findContact = contacts.items.find(contact =>
-      contact.name.toLowerCase().includes(name.toLowerCase())
-    );
-
+    const findContact = contacts
+      ? contacts.filter(contact =>
+          contact.name.toLowerCase().includes(name.toLowerCase())
+        )
+      : null;
+    console.log(findContact);
     if (findContact) {
       alert(`${name} is already in contacts`);
       return;
