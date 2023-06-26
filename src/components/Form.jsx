@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, getContacts } from 'redux/contactsSlice';
-import { fetchContacts } from '../redux/operations/fetchContacts';
 
 export default function Form() {
   const [name, setName] = useState('');
@@ -26,7 +25,6 @@ export default function Form() {
 
     const contact = { id: nanoid(), name, number };
     dispatch(addContact(contact));
-    dispatch(fetchContacts());
 
     setName('');
     setNumber('');
