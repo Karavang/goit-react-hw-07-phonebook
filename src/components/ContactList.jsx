@@ -15,10 +15,9 @@ export default function List() {
   }, [dispatch, contacts]);
 
   const filteredContacts = contacts
-    ? contacts.filter(contact => {
-        console.log(contact);
-        contact.name.toLowerCase().includes(filter.toLowerCase());
-      })
+    ? contacts.filter(contact =>
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+      )
     : [];
   console.log(filteredContacts);
   const handleDeleteContact = id => {
