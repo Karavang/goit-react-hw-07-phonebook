@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-const initialState = {
+
+import { fetchSlice } from './operations/thunks.js';
+
+export const initialState = {
   contacts: {
     items: [],
     isLoading: false,
@@ -13,25 +15,8 @@ export const contactSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    fetchContacts: (state, { payload }) => {
-      console.log(state);
-      const fetchData = async () => {
-        try {
-          payload = await axios.get(
-            'https://6474b8d87de100807b1ba095.mockapi.io/contacts'
-          );
-          console.log(payload.data);
-
-          state.contacts.items = payload.data;
-        } catch (error) {
-          console.error('Ошибка при получении данных:', error);
-        }
-      };
-
-      fetchData();
-    },
-
     addContact: (state, { payload }) => {
+      console.log(fetchSlice);
       state.contacts.items.push(payload);
     },
     removeContact: (state, { payload }) => {
@@ -46,13 +31,13 @@ export const contactSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addContact, removeContact, filterContact, fetchContacts } =
+export const { addContact, removeContact, filterContact } =
   contactSlice.actions;
 
 export default contactSlice.reducer;
 
 // Selectors
 
-export const getContacts = state => state.storage.contacts;
+export const getContacts = state => state.contacts;
 
-export const getFilter = state => state.storage.filter;
+export const getFilter = state => state.filter;

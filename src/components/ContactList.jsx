@@ -1,11 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  getContacts,
-  getFilter,
-  removeContact,
-  fetchContacts,
-} from 'redux/contactsSlice';
+import { getContacts, getFilter, removeContact } from 'redux/contactsSlice';
+import { fetchContacts } from '../redux/operations/fetchContacts';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 export default function List() {

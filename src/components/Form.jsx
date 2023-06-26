@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, getContacts, fetchContacts } from 'redux/contactsSlice';
+import { addContact, getContacts } from 'redux/contactsSlice';
+import { fetchContacts } from '../redux/operations/fetchContacts';
 
 export default function Form() {
   const [name, setName] = useState('');
