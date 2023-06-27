@@ -37,7 +37,15 @@ export const addContact = createAsyncThunk(
     }
   }
 );
-
+export const contactSlice = createSlice({
+  name: 'contacts',
+  initialState,
+  reducers: {
+    filterContact: (state, { payload }) => {
+      state.filter = payload;
+    },
+  },
+});
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkAPI) => {
@@ -50,9 +58,9 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-export const filterContact = payload => {
-  console.log(payload);
-  return { type: 'contacts/setFilter', payload };
+export const filterContact = (state, { payload }) => {
+  state.filter = payload;
+  console.log(state);
 };
 
 const handlePending = state => {
@@ -70,6 +78,8 @@ export const fetchSlice = createSlice({
   initialState,
   reducers: {
     setFilter: (state, { payload }) => {
+      console.log(state);
+      console.log(payload);
       state.filter = payload;
     },
   },
@@ -84,7 +94,7 @@ export const fetchSlice = createSlice({
         state.error = null;
         const { name, number } = payload;
         const date = new Date();
-        state.contacts.items.unshift({
+        state.contacts.items.push({
           name,
           number,
           CreatedAt: date.toJSON(),
@@ -95,7 +105,7 @@ export const fetchSlice = createSlice({
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.contacts.items = state.contacts.items.filter(
-          ({ id }) => id !== payload
+          ({ id }) => id !== payload.id
         );
         fetchContacts();
       })
@@ -107,8 +117,6 @@ export const fetchSlice = createSlice({
       .addCase(deleteContact.rejected, handleRejected);
   },
 });
-
-export const { setFilter } = fetchSlice.actions;
 
 export const getContacts = state => state.contacts.contacts.items;
 export const getFilter = state => state.contacts.filter;
