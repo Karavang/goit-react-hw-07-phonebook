@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact, getContacts } from '../redux/operations/thunks';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/operations/thunks';
 
 export default function Form() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
-  const contacts = useSelector(getContacts);
 
   const dispatch = useDispatch();
 
