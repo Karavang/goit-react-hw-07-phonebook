@@ -33,7 +33,10 @@ export default function List() {
             <button
               className="btn btn-primary add-contact"
               type="button"
-              onClick={() => handleDeleteContact(id)}
+              onClick={() => {
+                handleDeleteContact(id);
+                dispatch(fetchContacts());
+              }}
             >
               <MdOutlineDeleteOutline />
             </button>

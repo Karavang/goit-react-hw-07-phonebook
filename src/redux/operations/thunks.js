@@ -81,10 +81,12 @@ export const fetchSlice = createSlice({
           CreatedAt: date.toJSON(),
           id: nanoid(6),
         });
+        fetchContacts();
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         console.log(payload);
+        fetchContacts();
       })
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.rejected, handleRejected)
