@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { filterContact } from 'redux/contactsSlice';
+import { filterContact } from 'redux/operations/thunks';
 
 export default function Filter() {
   const dispatch = useDispatch();

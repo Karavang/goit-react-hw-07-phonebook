@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from 'redux/contactsSlice';
-import { deleteContact, getContacts } from 'redux/operations/thunks';
+
+import { deleteContact, getContacts, getFilter } from 'redux/operations/thunks';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { fetchContacts } from 'redux/operations/thunks';
 

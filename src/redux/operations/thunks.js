@@ -50,6 +50,11 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
+export const filterContact = payload => {
+  console.log(payload);
+  return { type: 'contacts/setFilter', payload };
+};
+
 const handlePending = state => {
   state.isLoading = true;
   state.error = '';
@@ -63,9 +68,13 @@ const handleRejected = (state, { payload }) => {
 export const fetchSlice = createSlice({
   name: 'contacts',
   initialState,
+  reducers: {
+    setFilter: (state, { payload }) => {
+      state.filter = payload;
+    },
+  },
   extraReducers: builder => {
     builder
-
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.contacts.items = payload;
@@ -85,7 +94,9 @@ export const fetchSlice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        console.log(payload);
+        state.contacts.items = state.contacts.items.filter(
+          ({ id }) => id !== payload
+        );
         fetchContacts();
       })
       .addCase(fetchContacts.pending, handlePending)
@@ -96,4 +107,8 @@ export const fetchSlice = createSlice({
       .addCase(deleteContact.rejected, handleRejected);
   },
 });
+
+export const { setFilter } = fetchSlice.actions;
+
 export const getContacts = state => state.contacts.contacts.items;
+export const getFilter = state => state.contacts.filter;
