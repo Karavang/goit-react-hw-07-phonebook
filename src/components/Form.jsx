@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact, getContacts } from 'redux/contactsSlice';
+import { addContact, getContacts } from '../redux/operations/thunks';
 
 export default function Form() {
   const [name, setName] = useState('');
@@ -13,17 +13,6 @@ export default function Form() {
 
   const handleFormSubmit = e => {
     e.preventDefault();
-
-    const findContact = contacts
-      ? contacts.filter(contact =>
-          contact.name.toLowerCase().includes(name.toLowerCase())
-        )
-      : null;
-    console.log(findContact);
-    if (findContact) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
 
     const contact = { id: nanoid(), name, number };
     dispatch(addContact(contact));

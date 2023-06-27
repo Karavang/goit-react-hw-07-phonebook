@@ -1,10 +1,18 @@
-import { initialState } from 'redux/contactsSlice';
 import { createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 axios.defaults.baseURL = 'https://6474b8d87de100807b1ba095.mockapi.io';
+
+export const initialState = {
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
+  filter: '',
+};
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
@@ -20,9 +28,9 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async ({ name, phone }, thunkAPI) => {
+  async ({ name, number }, thunkAPI) => {
     try {
-      const response = await axios.post('/contacts', { name, phone });
+      const response = await axios.post('/contacts', { name, number });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -67,7 +75,7 @@ export const fetchSlice = createSlice({
         state.error = null;
         const { name, number } = payload;
         const date = new Date();
-        state.items.unshift({
+        state.contacts.items.unshift({
           name,
           number,
           CreatedAt: date.toJSON(),
@@ -76,7 +84,7 @@ export const fetchSlice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        state.contacts = payload;
+        console.log(payload);
       })
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.rejected, handleRejected)
@@ -86,3 +94,4 @@ export const fetchSlice = createSlice({
       .addCase(deleteContact.rejected, handleRejected);
   },
 });
+export const getContacts = state => state.contacts.contacts.items;

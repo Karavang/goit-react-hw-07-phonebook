@@ -1,22 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-import { fetchSlice } from './operations/thunks.js';
-
-export const initialState = {
-  contacts: {
-    items: [],
-    isLoading: false,
-    error: null,
-  },
-  filter: '',
-};
+import { initialState } from '../redux/operations/thunks';
 
 export const contactSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
     addContact: (state, { payload }) => {
-      console.log(fetchSlice);
       state.contacts.items.push(payload);
     },
     removeContact: (state, { payload }) => {
@@ -38,6 +27,4 @@ export default contactSlice.reducer;
 
 // Selectors
 
-export const getContacts = state => state.contacts.items;
-
-export const getFilter = state => state.filter;
+export const getFilter = state => state.contacts.filter;

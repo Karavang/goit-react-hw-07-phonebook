@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getContacts, getFilter, removeContact } from 'redux/contactsSlice';
-
+import { getFilter } from 'redux/contactsSlice';
+import { deleteContact, getContacts } from 'redux/operations/thunks';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { fetchContacts } from 'redux/operations/thunks';
 
@@ -9,19 +9,19 @@ export default function List() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-
+  console.log(contacts);
   useEffect(() => {
     dispatch(fetchContacts());
-  }, [dispatch, contacts]);
-
+  }, [dispatch]);
+  console.log(contacts);
   const filteredContacts = contacts
     ? contacts.filter(contact =>
         contact.name.toLowerCase().includes(filter.toLowerCase())
       )
     : [];
-  console.log(filteredContacts);
+
   const handleDeleteContact = id => {
-    dispatch(removeContact(id));
+    dispatch(deleteContact(id));
   };
 
   return (
