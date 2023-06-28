@@ -9,7 +9,7 @@ export default function List() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-
+  console.log(filter);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);

@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { fetchSlice } from './operations/thunks';
+import { fetchSlice, filtrator } from './operations/thunks';
 
 export const store = configureStore({
-  reducer: { contacts: fetchSlice.reducer },
+  reducer: { contacts: fetchSlice.reducer, filter: filtrator.reducer },
 });

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { filterContacts } from 'redux/operations/thunks';
+import { setFilter } from 'redux/operations/thunks';
 
 export default function Filter() {
   const dispatch = useDispatch();
-  console.log(filterContacts);
+  console.log(setFilter);
   const filter = e => {
-    dispatch(filterContacts(e));
+    dispatch(setFilter(e));
     console.log(e);
   };
 

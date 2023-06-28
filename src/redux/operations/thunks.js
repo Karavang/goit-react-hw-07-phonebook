@@ -24,19 +24,18 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
+const initialStateFilter = { filter: '' };
 export const filtrator = createSlice({
   name: 'filter',
-  initialState,
+  initialState: initialStateFilter,
   reducers: {
     setFilter: (state, action) => {
-      console.log(state);
-      console.log(action);
       state.filter = action.payload;
     },
   },
 });
-console.log(filtrator.actions.setFilter);
-export const filterContacts = filtrator.actions.setFilter;
+export const getFilter = state => state.filter.filter;
+export const { setFilter } = filtrator.actions;
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async ({ name, number, id }, thunkAPI) => {
@@ -74,11 +73,6 @@ const handleRejected = (state, { payload }) => {
 export const fetchSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {
-    setFilter: (state, { payload }) => {
-      state.filter = payload;
-    },
-  },
 
   extraReducers: builder => {
     builder
@@ -108,4 +102,3 @@ export const fetchSlice = createSlice({
 });
 
 export const getContacts = state => state.contacts.contacts.items;
-export const getFilter = state => state.contacts.filter;
