@@ -24,7 +24,16 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
-
+export const filtrator = createSlice({
+  name: 'filter',
+  initialState,
+  reducers: {
+    setFilter: (state, action) => {
+      state.filter = action.payload;
+    },
+  },
+});
+export const filterContacts = filtrator.action;
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async ({ name, number, id }, thunkAPI) => {
@@ -64,11 +73,10 @@ export const fetchSlice = createSlice({
   initialState,
   reducers: {
     setFilter: (state, { payload }) => {
-      console.log(state);
-      console.log(payload);
       state.filter = payload;
     },
   },
+
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
