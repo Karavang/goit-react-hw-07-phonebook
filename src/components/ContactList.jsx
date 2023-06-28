@@ -9,11 +9,11 @@ export default function List() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
-  console.log(contacts);
+
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-  console.log(contacts);
+
   const filteredContacts = contacts
     ? contacts.filter(contact =>
         contact.name.toLowerCase().includes(filter.toLowerCase())

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { filterContact } from 'redux/operations/thunks';
+import { filterContacts } from 'redux/operations/thunks';
 
 export default function Filter() {
   const dispatch = useDispatch();
@@ -11,7 +11,7 @@ export default function Filter() {
       name="search"
       className="form-control"
       placeholder="Search by name"
-      onChange={e => dispatch(filterContact(e.target.value))}
+      onChange={e => dispatch(filterContacts(e.target.value))}
     />
   );
 }

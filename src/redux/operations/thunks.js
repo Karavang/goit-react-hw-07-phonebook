@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -28,24 +27,16 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async ({ name, number }, thunkAPI) => {
+  async ({ name, number, id }, thunkAPI) => {
     try {
-      const response = await axios.post('/contacts', { name, number });
+      const response = await axios.post('/contacts', { name, number, id });
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-export const contactSlice = createSlice({
-  name: 'contacts',
-  initialState,
-  reducers: {
-    filterContact: (state, { payload }) => {
-      state.filter = payload;
-    },
-  },
-});
+
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkAPI) => {
@@ -57,11 +48,22 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
-
-export const filterContact = (state, { payload }) => {
-  state.filter = payload;
-  console.log(state);
+const tasksSlice = {
+  name: 'tasks',
+  initialState: {
+    items: [],
+    isLoading: false,
+    error: null,
+  },
+  reducers: {
+    filterContacts(state, fil) {
+      console.log(state);
+      state.contacts.filter = fil;
+    },
+  },
 };
+
+export const filterContacts = tasksSlice.actions;
 
 const handlePending = state => {
   state.isLoading = true;
@@ -92,22 +94,14 @@ export const fetchSlice = createSlice({
       .addCase(addContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;
-        const { name, number } = payload;
-        const date = new Date();
-        state.contacts.items.push({
-          name,
-          number,
-          CreatedAt: date.toJSON(),
-          id: nanoid(6),
-        });
-        fetchContacts();
+
+        state.contacts.items = [...state.contacts.items, payload];
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.contacts.items = state.contacts.items.filter(
           ({ id }) => id !== payload.id
         );
-        fetchContacts();
       })
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.rejected, handleRejected)
