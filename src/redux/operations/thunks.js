@@ -48,22 +48,6 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
-const tasksSlice = {
-  name: 'tasks',
-  initialState: {
-    items: [],
-    isLoading: false,
-    error: null,
-  },
-  reducers: {
-    filterContacts(state, fil) {
-      console.log(state);
-      state.contacts.filter = fil;
-    },
-  },
-};
-
-export const filterContacts = tasksSlice.actions;
 
 const handlePending = state => {
   state.isLoading = true;
