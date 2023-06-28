@@ -33,7 +33,8 @@ export const filtrator = createSlice({
     },
   },
 });
-export const filterContacts = filtrator.action;
+console.log(filtrator.actions.setFilter);
+export const filterContacts = filtrator.actions.setFilter;
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async ({ name, number, id }, thunkAPI) => {
